@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigación: Balanceo de Cargas - TP-Link Omada ER605</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1>Investigación de Prácticas: Balanceo de Cargas</h1>
+        <p>Router TP-Link Omada ER605 (Multi-WAN)</p>
+    </header>
+
+    <nav>
+        <a href="#que-es"><i class="fas fa-book"></i> ¿Qué es?</a>
+        <a href="#caracteristicas"><i class="fas fa-microchip"></i> Características</a>
+        <a href="#tipos"><i class="fas fa-network-wired"></i> Tipos de Balanceo</a>
+        <a href="#configuracion"><i class="fas fa-cogs"></i> Configuración</a>
+        <a href="#simulador"><i class="fas fa-laptop-code"></i> Simulador</a>
+    </nav>
+
+    <main>
+        <section id="que-es">
+            <h2>¿Qué es el balanceo de cargas y para qué sirve?</h2>
+            <p>El balanceo de cargas es una técnica de redes que consiste en distribuir el tráfico de datos de manera eficiente a través de dos o más conexiones de Internet (enlaces WAN) o hacia múltiples servidores. Su objetivo principal es optimizar el rendimiento, maximizar la velocidad y garantizar la disponibilidad continua de la red.</p>
+            <h3>¿Para qué sirve?</h3>
+            <ul>
+                <li><strong>Optimización del ancho de banda:</strong> Agrega la capacidad de múltiples proveedores de internet.</li>
+                <li><strong>Alta disponibilidad y redundancia (Failover):</strong> Si un enlace principal falla, el tráfico se desvía de forma automática a la línea activa.</li>
+                <li><strong>Distribución inteligente del tráfico:</strong> Permite asignar rutas específicas por protocolos o tipos de uso.</li>
+                <li><strong>Prevención de congestión:</strong> Evita que una sola conexión colapse ante alta demanda local.</li>
+            </ul>
+        </section>
+
+        <section id="caracteristicas">
+            <h2>Características principales del TP-Link Omada ER605</h2>
+            <p>Es un enrutador VPN Gigabit con capacidades multi-WAN diseñado para entornos que exigen alta disponibilidad y seguridad robusta.</p>
+            <ul>
+                <li><strong>Puertos Multi-WAN Flexibles:</strong> Puertos Gigabit intercambiables WAN/LAN y soporte para módem USB 4G/3G de respaldo.</li>
+                <li><strong>Balanceo Inteligente:</strong> Distribución automática o por peso proporcional de los flujos de datos.</li>
+                <li><strong>Seguridad Avanzada:</strong> Túneles VPN (IPsec, OpenVPN, L2TP), Firewall con inspección SPI y defensa DoS.</li>
+                <li><strong>Integración Omada SDN:</strong> Gestión centralizada para monitoreo masivo y automatización.</li>
+            </ul>
+        </section>
+
+        <section id="tipos">
+            <h2>Tipos de balanceo: Failover vs. Distribución de Carga</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>1. Enrutamiento de Respaldo (Failover)</h3>
+                    <p>Prioriza la continuidad absoluta. Todo el tráfico fluye por la línea principal (WAN 1) y, ante una caída detectada por pings continuos, conmuta automáticamente hacia la línea de respaldo (WAN 2).</p>
+                </div>
+                <div class="card">
+                    <h3>2. Distribución de Carga (Load Balancing)</h3>
+                    <p>Aprovecha múltiples enlaces simultáneamente. Puede configurarse mediante políticas de enrutamiento (Policy-Based Routing) o por peso ponderado proporcional a los Mbps de cada proveedor.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="configuracion">
+            <h2><i class="fas fa-sliders-h"></i> Guía de Configuración del Módulo (ER605)</h2>
+            <p>Para poner en marcha la distribución de tráfico multi-WAN en el router Omada ER605 mediante su interfaz web local (Modo Independiente), se deben seguir los siguientes pasos técnicos:</p>
+            
+            <ol class="config-steps">
+                <li>
+                    <strong>Acceso al Panel de Administración:</strong> 
+                    Conecta una computadora a cualquier puerto LAN del router mediante un cable Ethernet e ingresa a la puerta de enlace predeterminada (por defecto <code>192.168.0.1</code>).
+                </li>
+                <li>
+                    <strong>Habilitación y Definición de Puertos WAN:</strong> 
+                    Dirígete al menú <strong>Network > WAN</strong>. Configura los puertos físicos que funcionarán como entradas de internet y selecciona el tipo de conexión correspondiente de tu ISP.
+                </li>
+                <li>
+                    <strong>Activación del Módulo de Balanceo:</strong> 
+                    Navega a <strong>Transmission > Load Balancing > Basic Settings</strong> y marca la casilla <strong>Enable Load Balancing</strong> para activar el motor de distribución de tráfico.
+                </li>
+                <li>
+                    <strong>Asignación de Pesos de Ancho de Banda (Weight):</strong> 
+                    Habilita la opción de enrutamiento basado en el ancho de banda por puertos (*Bandwidth Based Balance Routing*) e ingresa los valores de subida y bajada contratados para cada ISP.
+                </li>
+                <li>
+                    <strong>Configuración de Enlaces de Respaldo (Link Backup):</strong> 
+                    Para un esquema de alta disponibilidad, entra a <strong>Transmission > Load Balancing > Link Backup</strong>. Establece un enlace principal (WAN 1) y asigna la línea secundaria como respaldo (WAN 2).
+                </li>
+            </ol>
+        </section>
+
+        <section id="simulador">
+            <h2>Simulador Interactivo de Estado WAN</h2>
+            <p>Haz clic en los botones para simular el comportamiento del router ante una falla en la línea principal:</p>
+            <div class="simulador-box">
+                <div class="status-panel">
+                    <span id="wan1-status" class="badge active">WAN 1 (Principal - 100 Mbps): ACTIVA</span>
+                    <span id="wan2-status" class="badge standby">WAN 2 (Respaldo - 50 Mbps): EN ESPERA</span>
+                </div>
+                <button id="btn-fallo">Simular Caída de WAN 1</button>
+                <button id="btn-restaurar">Restaurar Enlaces</button>
+                <p id="log-output">Estado del sistema operando en modo óptimo.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Prácticas de Redes - Ingeniería en Sistemas Computacionales</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
